@@ -1,0 +1,90 @@
+extends layout
+
+block content
+    h1 #{player.primaryNumber} #{player.fullName}
+    div.row
+        div.card.col-md-6
+                    div.row.card-body
+                        div.col-md-3
+                            img(class="playerIMG", src=`https://securea.mlb.com/mlb/images/players/head_shot/${player.id}.jpg` alt=`${player.fullName}`)
+                        div.col-md-9
+                            h5.card-title #{player.primaryPosition.name}
+                            p. 
+                                Age: #{player.currentAge} #[br]
+                                Height: #{player.height} #[br]
+                                Weight: #{player.weight} #[br]
+                                Birth Country: #{player.birthCountry} #[br]
+                                Bats: #{player.batSide.description} #[br]
+                                Throws: #{player.pitchHand.description} #[br]
+            
+            
+        div.col-md-12.mt-5  
+        each stat in player.stats
+            h2.stat #{stat.group.displayName}
+            table.table.table-sm
+                thead.thead-dark
+                    tr
+                        if (stat.group.displayName == "fielding")
+                            th(scope=`col`) Season
+                            th(scope=`col`) Team
+                            th(scope=`col`) Games
+                            th(scope=`col`) Innings
+                            th(scope=`col`) Position
+                            th(scope=`col`) Errors
+                            th(scope=`col`) Fielding %
+                        else if (stat.group.displayName == "hitting")
+                            th(scope=`col`) Season
+                            th(scope=`col`) Team
+                            th(scope=`col`) Games
+                            th(scope=`col`) Plate Appearances
+                            th(scope=`col`) Hits
+                            th(scope=`col`) Home Runs
+                            th(scope=`col`) RBI
+                            th(scope=`col`) Avg
+                            th(scope=`col`) OBP
+                            th(scope=`col`) SLG
+                            th(scope=`col`) OPS
+                        else if (stat.group.displayName == "pitching")
+                            th(scope=`col`) Season
+                            th(scope=`col`) Team
+                            th(scope=`col`) Games
+                            th(scope=`col`) Innings Pitched
+                            th(scope=`col`) ERA
+                            th(scope=`col`) WHIP
+                            th(scope=`col`) Strikeouts
+                            th(scope=`col`) Saves
+                            th(scope=`col`) SO/9 Innings
+
+                tbody
+                    each split in stat.splits
+                     tr
+                        th #{split.season}
+                        if (split.team)
+                            td
+                                a(href=`/teams/${split.team.id}`) #{split.team.name}
+                        else
+                            td Total
+                        if (stat.group.displayName == "fielding")
+                            td #{split.stat.games}
+                            td #{split.stat.innings}
+                            td #{split.stat.position.abbreviation}
+                            td #{split.stat.errors}
+                            td #{split.stat.fielding}
+                        else if (stat.group.displayName == "hitting")
+                            td #{split.stat.gamesPlayed}
+                            td #{split.stat.plateAppearances}
+                            td #{split.stat.hits}
+                            td #{split.stat.homeRuns}
+                            td #{split.stat.rbi}
+                            td #{split.stat.avg}
+                            td #{split.stat.obp}
+                            td #{split.stat.slg}
+                            td #{split.stat.ops}
+                        else if (stat.group.displayName == "pitching")
+                            td #{split.stat.gamesPlayed}
+                            td #{split.stat.inningsPitched}
+                            td #{split.stat.era}
+                            td #{split.stat.whip}
+                            td #{split.stat.strikeOuts}
+                            td #{split.stat.saves}
+                            td #{split.stat.strikeoutsPer9Inn}

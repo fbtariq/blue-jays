@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1 MLB Teams
+    each team in teams
+        div.row
+            div.col-md-2
+                img(class="teamIMG", src=`https://www.mlbstatic.com/team-logos/${team.id}.svg`)
+            div.col-md-4.valign
+                p
+                    a(href=`/teams/${team.id}`) #{team.name}

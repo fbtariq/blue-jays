@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1 #{team.name}
+    each player in roster
+        div.row
+            div.col-md-12
+            
+                div.card.col-md-6
+                    div.row.card-body
+                        div.col-md-3
+                            img(class="playerIMG", src=`https://securea.mlb.com/mlb/images/players/head_shot/${player.person.id}.jpg` alt=`${player.person.fullName}`)
+                        div.col-md-9
+                            h5.card-title #{player.jerseyNumber} #{player.person.fullName}
+                            p.card-text #{player.position.name}
+                            a(href=`/player/${player.person.id}`, class=`btn btn-primary`) Player Profile
